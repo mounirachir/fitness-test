@@ -24,9 +24,7 @@ const Workout = ({ userData, setUserData }) => {
 
         console.log("Fetching workout with slug:", slug); // Log the slug for debugging
 
-        const response = await fetch(
-          `http://localhost:5000/api/workouts/${slug}`
-        );
+        const response = await fetch(`/api/workouts/${slug}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

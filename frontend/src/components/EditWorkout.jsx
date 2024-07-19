@@ -48,20 +48,17 @@ const EditWorkout = ({
   const handleSubmit = async () => {
     try {
       const decoded = jwtDecode(token || localStorage.getItem("token"));
-      const response = await fetch(
-        `http://localhost:5000/api/auth/user/${decoded.user.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            score: userData.score,
-            daysPassed: userData.daysPassed,
-            workout: selectedWorkout,
-          }),
-        }
-      );
+      const response = await fetch(`/api/auth/user/${decoded.user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          score: userData.score,
+          daysPassed: userData.daysPassed,
+          workout: selectedWorkout,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

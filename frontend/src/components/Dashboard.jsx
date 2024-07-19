@@ -36,9 +36,7 @@ const Dashboard = ({ token, setToken, userData, setUserData, msg, setMsg }) => {
       if (token || localStorage.getItem("token")) {
         try {
           const decoded = jwtDecode(token || localStorage.getItem("token"));
-          const response = await fetch(
-            `http://localhost:5000/api/auth/user/${decoded.user.id}`
-          );
+          const response = await fetch(`/api/auth/user/${decoded.user.id}`);
           if (response.ok) {
             const data = await response.json();
             console.log(data);
@@ -74,21 +72,18 @@ const Dashboard = ({ token, setToken, userData, setUserData, msg, setMsg }) => {
     try {
       const decoded = jwtDecode(token);
 
-      const response = await fetch(
-        `http://localhost:5000/api/auth/user/${decoded.user.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            score: updatedTotalScore,
-            daysPassed: daysPassed, // Make sure daysPassed is defined in your scope
-            workout: userData.workout || "", // Ensure workout is included or set a default
-            workoutUpdated: userData.workoutUpdated,
-          }),
-        }
-      );
+      const response = await fetch(`/api/auth/user/${decoded.user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          score: updatedTotalScore,
+          daysPassed: daysPassed, // Make sure daysPassed is defined in your scope
+          workout: userData.workout || "", // Ensure workout is included or set a default
+          workoutUpdated: userData.workoutUpdated,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update user progress");
@@ -126,8 +121,6 @@ const Dashboard = ({ token, setToken, userData, setUserData, msg, setMsg }) => {
     return (
       token && (
         <section className="flex flex-col justify-center items-center relative min-h-screen">
-          
-
           <h1 className="font-bold text-2xl md:text-5xl text-white mb-10 text-center bg-gradient-to-tl from-orange-500 via-transparent to-orange-500 rounded-lg p-4 leading-relaxed">
             <span>Your Progress Has Been Saved,</span>
             <br />
